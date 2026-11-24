@@ -96,11 +96,14 @@ public class Recorder {
         eng.setSample(s, name);
         eng.recCols = new int[0];
         eng.recVer = 0;
-        JSONArray a = new JSONArray();
-        a.put("rc");
-        a.put(name);
-        a.put(Engine.round2(pos / (float) Engine.SR));
-        eng.ev(a);
+        try {
+            JSONArray a = new JSONArray();
+            a.put("rc");
+            a.put(name);
+            a.put(Engine.round2(pos / (float) Engine.SR));
+            eng.ev(a);
+        } catch (Exception ignored) {
+        }
     }
 
     public void stop() {
