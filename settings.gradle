@@ -1,0 +1,2 @@
+rootProject.name = 'GranularLab'
+include ':app'
