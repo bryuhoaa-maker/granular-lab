@@ -404,8 +404,8 @@ public class Engine {
                 scopeRing[scopeIdx & 1023] = (l + r) * .5f;
                 scopeIdx++;
             }
-            out[f * 2] = (short) (Math.max(-1, Math.min(1, l)) * 32767);
-            out[f * 2 + 1] = (short) (Math.max(-1, Math.min(1, r)) * 32767);
+            out[f * 2] = (short) (Math.max(-1f, Math.min(1f, l)) * 32767);
+            out[f * 2 + 1] = (short) (Math.max(-1f, Math.min(1f, r)) * 32767);
         }
         mL = Math.max(mL * .9f, pkL);
         mR = Math.max(mR * .9f, pkR);
@@ -476,11 +476,14 @@ public class Engine {
         waveCols = cols;
         scanPos = param("pos").v;
 
-        JSONArray a = new JSONArray();
-        a.put("ld");
-        a.put(name);
-        a.put(round2(sampLen));
-        ev(a);
+        try {
+            JSONArray a = new JSONArray();
+            a.put("ld");
+            a.put(name);
+            a.put(round2(sampLen));
+            ev(a);
+        } catch (Exception ignored) {
+        }
     }
 
     public void loadDemo(int idx) {
@@ -747,7 +750,7 @@ public class Engine {
             int si = scopeIdx;
             for (int k = 0; k < 192; k++) {
                 float v = scopeRing[(si - 384 + k * 2 + 4096) & 1023];
-                sc.put((int) (Math.max(-1, Math.min(1, v)) * 1000));
+                sc.put((int) (Math.max(-1f, Math.min(1f, v)) * 1000));
             }
             o.put("scope", sc);
 
