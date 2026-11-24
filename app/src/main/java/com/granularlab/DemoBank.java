@@ -37,9 +37,9 @@ public class DemoBank {
                 v += saw * trem * 0.2f;
             }
             float fc = (float) (900 + 2600 * (0.5 - 0.5 * Math.cos(2 * Math.PI * t / 6)));
-            float a = Math.min(1, fc * 6.283f / SR);
+            float a = Math.min(1f, fc * 6.283f / SR);
             lp += a * (v - lp);
-            float env = Math.min(1, t / .8) * Math.min(1, (6 - t) / 1.2);
+            float env = (float) (Math.min(1.0, t / .8) * Math.min(1.0, (6 - t) / 1.2));
             s[i] = lp * env;
         }
         return s;
@@ -55,7 +55,7 @@ public class DemoBank {
             double v = Math.sin(2 * Math.PI * 880 * t + mod) * Math.exp(-t * 2.2);
             v += Math.sin(2 * Math.PI * 1760 * t) * .3 * Math.exp(-t * 4);
             v += Math.sin(2 * Math.PI * 2640 * t) * .12 * Math.exp(-t * 6);
-            s[i] = (float) v * Math.min(1, t / .002);
+            s[i] = (float) (v * Math.min(1.0, t / .002));
         }
         return s;
     }
@@ -78,14 +78,14 @@ public class DemoBank {
             float y1 = bp(b1, src, F1, 80);
             float y2 = bp(b2, src, F2, 120);
             float y3 = bp(b3, src, F3, 200);
-            float env = (float) (Math.min(1, t / .5) * Math.min(1, 4 - t));
+            float env = (float) (Math.min(1.0, t / .5) * Math.min(1.0, 4 - t));
             s[i] = (y1 + y2 * .5f + y3 * .25f) * env;
         }
         return s;
     }
 
     private static float bp(float[] st, float in, float fc, float bw) {
-        float f = (float) (2 * Math.sin(Math.PI * Math.min(fc, 10000) / SR));
+        float f = (float) (2 * Math.sin(Math.PI * Math.min(fc, 10000f) / SR));
         float q = Math.max(.05f, bw * 6.283f / SR * 2);
         st[0] += f * st[1];
         float hi = in - st[0] - q * st[1];
